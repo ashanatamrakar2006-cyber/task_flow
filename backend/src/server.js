@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-
+const path = require('path');
 const boardsRouter = require('./routes/boards');
 const tasksRouter = require('./routes/tasks');
 
@@ -9,13 +9,14 @@ const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
-
 app.use('/api/boards', boardsRouter);
 app.use('/api/tasks', tasksRouter);
 
-// Basic health check
-app.get('/', (req, res) => {
-  res.json({ message: 'TaskFlow API is running' });
+// Serve frontend build
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });
 
 // Fallback error handler (catches unexpected errors)
