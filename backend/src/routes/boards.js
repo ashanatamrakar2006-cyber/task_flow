@@ -45,4 +45,26 @@ router.get('/:id/task-counts', (req, res) => {
   res.json(counts);
 });
 
+// POST /api/boards - create a new board with default columns
+router.post('/', (req, res) => {
+  const { name } = req.body;
+
+  if (!name || name.trim() === '') {
+    return res.status(400).json({ error: 'Board name is required' });
+  }
+
+  const insertBoard = db.prepare('INSERT INTO boards (name) VALUES (?)');
+  const result = insertBoard.run(name.trim());
+  const boardId = result.lastInsertRowid;
+
+  const defaultColumns = ['To Do', 'In Progress', 'Done'];
+  const insertColumn = db.prepare('INSERT INTO columns (board_id, name, position) VALUES (?, ?, ?)');
+  defaultColumns.forEach((colName, index) => {
+    insertColumn.run(boardId, colName, index);
+  });
+
+  const board = db.prepare('SELECT * FROM boards WHERE id = ?').get(boardId);
+  res.status(201).json(board);
+});
+
 module.exports = router;
