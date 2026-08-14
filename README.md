@@ -84,21 +84,20 @@ Both filter/aggregate at the database level, not in application code.
 
 ## Assumptions & decisions
 
-- [Single board only — the app loads one fixed board (`BOARD_ID` in `App.jsx`) since multi-board support wasn't required by the spec.]
-- [Used a dropdown to move tasks between columns instead of drag-and-drop, per the spec's suggestion that a working dropdown beats a broken drag-and-drop.]
-- [Backend runs on port 4000 instead of the common default 5000, to avoid a local port conflict during development.]
-- [Add any other decision you made here.]
+- Single board only — the app loads one fixed board (`BOARD_ID` in `App.jsx`) since multi-board support wasn't required by the spec.
+- Used a dropdown to move tasks between columns instead of drag-and-drop, per the spec's suggestion that a working dropdown beats a broken drag-and-drop.
+- Backend runs on port 4000 instead of the common default 5000, to avoid a local port conflict during development.
 
 ## What I'd improve with more time
 
-- [e.g., Add drag-and-drop as the stretch goal instead of task counts]
-- [e.g., Add a text search box for filtering by title]
-- [e.g., Deploy to Render/Railway for a live demo link]
+- Add drag-and-drop as an alternative to the dropdown for moving tasks
+- Add a text search box to filter tasks by title
+- Add support for multiple boards
 
 ## Time spent
 
-Roughly  3-4 hours total.
+Roughly 3-4 hours total.
 
 ## Something I learned / found interesting
 
-[One or two sentences — e.g., something about SQLite constraints, better-sqlite3, React state patterns, etc.]
+Working with `better-sqlite3`'s synchronous API was interesting — no async/await needed for queries, which simplified the route handlers compared to other Node database libraries I've seen. Adding a `CHECK` constraint directly in the schema (for the `priority` column) was a simple way to enforce valid values at the database level instead of only in application code.
