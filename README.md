@@ -103,3 +103,4 @@ Roughly 3-4 hours total.
 Working with `better-sqlite3`'s synchronous API was interesting — no async/await needed for queries, which simplified the route handlers compared to other Node database libraries I've seen. Adding a `CHECK` constraint directly in the schema (for the `priority` column) was a simple way to enforce valid values at the database level instead of only in application code.
 
 🔗 **Live demo:** https://task-flow-dlcj.onrender.com
+A simple task board app (Trello-lite) — Board → Columns → Tasks, built with React (frontend) and Node.js/Express + SQLite (backend).
